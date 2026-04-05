@@ -128,6 +128,10 @@
         background: white;
       }
 
+      .chart-frame--plotly {
+        min-height: 660px;
+      }
+
       .citation {
         color: var(--accent);
         text-decoration: none;
@@ -159,6 +163,10 @@
 
         iframe {
           min-height: 1260px;
+        }
+
+        .chart-frame--plotly {
+          min-height: 760px;
         }
       }
     </style>
@@ -377,11 +385,22 @@
           aria-label="Crime ratio over time visualization"
         >
           <iframe
+            class="chart-frame--plotly"
             src="./interactive_plotly.html"
             title="Crime ratio over time"
             loading="lazy"
           ></iframe>
         </section>
+        <p class="chart-caption">
+          <strong>Figure 3</strong> — Line graph showing the ratio of assault,
+          burglary, drug offense, fraud, missing person, prostitution, robbery,
+          vandalism and weapons to the total amount of these crimes over the
+          years, where drug offenses are highlighted. The graph is interactive
+          and crime type displays are selectable by clicking on the crime type
+          in the list on the right. It is also possible to view monthly ratio
+          instead of yearly, as well as to see the graph only 5 or 10 years in
+          the past.
+        </p>
       </section>
 
       <section class="chapter" id="conclusion">
