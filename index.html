@@ -93,6 +93,20 @@
         overflow: hidden;
       }
 
+      .chart-shell--fall-map iframe {
+        min-height: 640px;
+      }
+
+      .chart-shell__header {
+        padding: 22px 24px 16px;
+      }
+
+      .chart-shell__title {
+        margin: 0;
+        font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+        line-height: 1.15;
+      }
+
       .chart-shell img {
         display: block;
         width: 100%;
@@ -296,15 +310,29 @@
           <a class="citation" href="#ref-7">[7]</a>
         </p>
         <section
-          class="chart-shell"
+          class="chart-shell chart-shell--fall-map"
           aria-label="Drug offense heatmap with districts visualization"
         >
+          <div class="chart-shell__header">
+            <h3 class="chart-shell__title">
+              Drug Offense Concentration Across San Francisco, 2003–2025
+            </h3>
+          </div>
           <iframe
-            src="./drug_offense_heatmap_with_districts_2003_2025.html"
+            src="./drug_offense_heatmap_with_districts_2003_2025_new.html"
             title="Drug offense heatmap with districts"
             loading="lazy"
           ></iframe>
         </section>
+        <p class="chart-caption">
+          <strong>Figure 2</strong> — Heatmap of recorded drug offense incidents
+          by location and police district, 2003–2025. Use the time slider to
+          move year by year. Brighter areas indicate higher concentrations of
+          recorded incidents, while the district outlines show how the
+          geography of drug enforcement shifted over time. The map makes the
+          broader pattern visible: even as citywide incidents fell, activity
+          became increasingly concentrated in and around the Tenderloin.
+        </p>
       </section>
 
       <section class="chapter" id="rise">
