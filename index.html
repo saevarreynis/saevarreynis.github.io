@@ -192,7 +192,7 @@
       .act__figure {
         position: sticky;
         top: 46px;
-        width: 56%;
+        width: 63%;
         height: calc(100vh - 46px);
         flex-shrink: 0;
         display: flex;
@@ -233,7 +233,7 @@
 
       /* Steps column */
       .act__steps {
-        width: 44%;
+        width: 37%;
         padding-left: 36px;
       }
       .act__header {
@@ -637,10 +637,13 @@
               <div class="step__body">
                 <p>
                   The pandemic accelerated the collapse. Street-level
-                  enforcement contracted sharply. In 2021, SFPD filed just 942
-                  drug offense reports — an 89% drop from the 2008 peak. By this
-                  measure, drug crime had nearly vanished from San Francisco. It
-                  hadn't. It was about to come back harder.
+                  enforcement contracted sharply — a pattern documented
+                  statewide, with California arrests falling by roughly 40% in
+                  2020.
+                  <a class="citation" href="#ref-9">[9]</a> In 2021, SFPD filed
+                  just 942 drug offense reports — an 89% drop from the 2008
+                  peak. By this measure, drug crime had nearly vanished from San
+                  Francisco. It hadn't. It was about to come back harder.
                 </p>
               </div>
             </div>
@@ -998,6 +1001,13 @@
             >California Opioid Crisis</a
           >.
         </li>
+        <li id="ref-9">
+          Public Policy Institute of California.
+          <a
+            href="https://www.ppic.org/publication/assessing-the-impact-of-covid-19-on-arrests-in-california/"
+            >Assessing the Impact of COVID-19 on Arrests in California</a
+          >.
+        </li>
       </ol>
     </section>
 
@@ -1334,6 +1344,14 @@
           Plotly.relayout("crime-ratio-plot-px-only", {
             paper_bgcolor: "transparent",
             plot_bgcolor: "rgba(255,253,248,0.3)",
+            /* Move Yearly/Monthly buttons to top-right so they don't
+               collide with the rangeselector (5y/10y/All) on the left */
+            "updatemenus[0].x": 0.99,
+            "updatemenus[0].xanchor": "right",
+            "updatemenus[0].y": 1.08,
+            "updatemenus[0].yanchor": "top",
+            /* Give the top margin enough room for two button rows */
+            "margin.t": 116,
           });
           var el = document.getElementById("crime-ratio-plot-px-only");
           if (el) Plotly.Plots.resize(el);
