@@ -3,134 +3,355 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Fall and Rise of Drug Crimes in San Fransisco</title>
+    <title>The Fall and Rise of Drug Crimes in San Francisco</title>
+
+    <!-- Google Fonts: Playfair Display (headings) + Lora (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
+      /* ─────────────────────────────────────────
+         Design tokens
+      ───────────────────────────────────────── */
       :root {
-        color-scheme: light;
-        --page-bg: #f4f1ea;
-        --card-bg: #fffdf8;
-        --text: #1c2a28;
-        --muted: #5c6a67;
-        --border: rgba(28, 42, 40, 0.12);
-        --shadow: 0 24px 60px rgba(28, 42, 40, 0.08);
-        --accent: #7b3f00;
+        --page-bg:    #f4f1ea;
+        --card-bg:    #fffdf8;
+        --text:       #1c2a28;
+        --muted:      #5c6a67;
+        --border:     rgba(28, 42, 40, 0.12);
+        --accent:     #7b3f00;
+        --shadow-sm:  0 8px 30px rgba(28, 42, 40, 0.06);
+        --shadow-md:  0 16px 48px rgba(28, 42, 40, 0.11);
+        --shadow-lg:  0 24px 60px rgba(28, 42, 40, 0.08);
+        --heading:    'Playfair Display', Georgia, serif;
+        --body:       'Lora', Georgia, serif;
+        --step-w:     520px;
+        --side-pad:   32px;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      /* ─────────────────────────────────────────
+         Reset & base
+      ───────────────────────────────────────── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
 
       body {
-        margin: 0;
-        font-family: Georgia, "Times New Roman", serif;
-        background: linear-gradient(180deg, #f7f3eb 0%, var(--page-bg) 100%);
+        font-family: var(--body);
+        background: var(--page-bg);
         color: var(--text);
+        font-size: 1rem;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
       }
 
-      main {
-        max-width: 1520px;
+      /* ─────────────────────────────────────────
+         Masthead / Hero
+      ───────────────────────────────────────── */
+      .masthead {
+        max-width: 820px;
         margin: 0 auto;
-        padding: 48px 28px 80px;
+        padding: 88px var(--side-pad) 56px;
       }
 
-      h1 {
-        margin: 0 0 12px;
-        font-size: clamp(2.2rem, 4vw, 4rem);
-        line-height: 1.05;
+      .masthead__kicker {
+        font-family: var(--body);
+        font-size: 0.82rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 18px;
       }
 
-      p {
-        margin: 0;
-        max-width: 860px;
-        color: var(--muted);
-        font-size: 1.05rem;
-        line-height: 1.6;
-      }
-
-      .lede {
+      .masthead__headline {
+        font-family: var(--heading);
+        font-size: clamp(2.8rem, 5.5vw, 5.2rem);
+        font-weight: 900;
+        line-height: 1.04;
+        color: var(--text);
         margin-bottom: 28px;
       }
 
+      .masthead__deck {
+        font-family: var(--body);
+        font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+        line-height: 1.7;
+        color: var(--muted);
+        max-width: 640px;
+        margin-bottom: 36px;
+      }
+
+      .masthead__byline {
+        font-family: var(--body);
+        font-size: 0.88rem;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+        padding-top: 18px;
+        letter-spacing: 0.02em;
+      }
+
+      /* ─────────────────────────────────────────
+         Navigation
+      ───────────────────────────────────────── */
       nav {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0 var(--side-pad) 56px;
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin: 24px 0 36px;
+        gap: 10px;
       }
 
       nav a {
+        font-family: var(--body);
+        font-size: 0.83rem;
         color: var(--text);
         text-decoration: none;
         border: 1px solid var(--border);
-        background: rgba(255, 253, 248, 0.8);
+        background: rgba(255, 253, 248, 0.85);
         border-radius: 999px;
-        padding: 10px 16px;
+        padding: 8px 18px;
+        transition: background 0.2s, border-color 0.2s, color 0.2s;
       }
 
-      .chapter {
-        margin-top: 28px;
-        padding: 28px;
+      nav a:hover {
+        background: var(--card-bg);
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ─────────────────────────────────────────
+         Introduction (prose-only, centered)
+      ───────────────────────────────────────── */
+      .intro-section {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 var(--side-pad) 80px;
+      }
+
+      .intro-section p {
+        font-size: 1.06rem;
+        line-height: 1.78;
+        color: var(--muted);
+        margin-bottom: 22px;
+      }
+
+      .intro-section p:last-child { margin-bottom: 0; }
+
+      .intro-section strong { color: var(--text); }
+
+      /* ─────────────────────────────────────────
+         Act divider
+      ───────────────────────────────────────── */
+      .act-divider {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 16px var(--side-pad);
+      }
+
+      .act-divider__line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .act-divider__numeral {
+        font-family: var(--heading);
+        font-style: italic;
+        font-size: 1.1rem;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      /* ─────────────────────────────────────────
+         Scrollytelling Acts
+         Desktop: 55% sticky figure | 45% steps
+         Mobile:  stacked
+      ───────────────────────────────────────── */
+      .act {
+        position: relative;
+      }
+
+      .act__inner {
+        display: flex;
+        align-items: flex-start;
+        max-width: 1420px;
+        margin: 0 auto;
+        padding: 0 var(--side-pad);
+      }
+
+      /* ── Sticky figure panel ── */
+      .act__figure {
+        position: sticky;
+        top: 0;
+        width: 55%;
+        height: 100vh;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 24px 32px 24px 0;
+      }
+
+      .act__figure-inner {
+        flex: 1;
         background: var(--card-bg);
         border: 1px solid var(--border);
         border-radius: 20px;
-        box-shadow: var(--shadow);
-      }
-
-      h2 {
-        margin: 0 0 16px;
-        font-size: clamp(1.5rem, 2vw, 2.2rem);
-      }
-
-      .chapter p + p {
-        margin-top: 16px;
-      }
-
-      .chart-shell {
-        margin-top: 24px;
-        background: #fff;
-        border: 1px solid rgba(28, 42, 40, 0.08);
-        border-radius: 18px;
+        box-shadow: var(--shadow-lg);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
 
-      .chart-shell--fall-map iframe {
-        min-height: 640px;
+      .act__figure-caption {
+        font-family: var(--body);
+        font-style: italic;
+        font-size: 0.82rem;
+        color: var(--muted);
+        text-align: center;
+        padding: 12px 16px 10px;
+        border-top: 1px solid var(--border);
+        flex-shrink: 0;
       }
 
-      .chart-shell__header {
-        padding: 22px 24px 16px;
-      }
-
-      .chart-shell__title {
-        margin: 0;
-        font-size: clamp(1.5rem, 2.2vw, 2.1rem);
-        line-height: 1.15;
-      }
-
-      .chart-shell img {
-        display: block;
+      .act__figure-img {
         width: 100%;
-        height: auto;
-        padding: 16px;
-        box-sizing: border-box;
+        height: 100%;
+        object-fit: contain;
+        padding: 20px;
+        flex: 1;
       }
 
-      .chart-caption {
-        margin-top: 16px;
+      /* Placeholder boxes for Phase 1 */
+      .placeholder {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 24px;
+      }
+
+      .placeholder__icon {
+        font-size: 2.4rem;
+        opacity: 0.35;
+      }
+
+      .placeholder__label {
+        font-family: var(--body);
+        font-style: italic;
         font-size: 0.9rem;
+        color: var(--muted);
+        opacity: 0.7;
       }
 
-      iframe {
-        display: block;
+      .placeholder--heatmap {
+        background: linear-gradient(135deg, #eee9db 0%, #e0d4b8 100%);
+      }
+
+      .placeholder--plotly {
+        background: linear-gradient(135deg, #e8eef4 0%, #cfdce8 100%);
+      }
+
+      /* ── Steps panel ── */
+      .act__steps {
+        width: 45%;
+        padding-left: 40px;
+      }
+
+      .act__header {
+        padding: 72px 0 36px;
+      }
+
+      .act__act-label {
+        font-family: var(--body);
+        font-size: 0.78rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .act__title {
+        font-family: var(--heading);
+        font-size: clamp(1.9rem, 2.8vw, 2.8rem);
+        font-weight: 700;
+        line-height: 1.12;
+        margin-bottom: 18px;
+      }
+
+      .act__intro {
+        font-size: 1.02rem;
+        line-height: 1.7;
+        color: var(--muted);
+        max-width: var(--step-w);
+      }
+
+      /* ── Individual scroll step ── */
+      .step {
+        min-height: 80vh;
+        padding: 48px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .step--spacer {
+        min-height: 40vh;
+        pointer-events: none;
+      }
+
+      .step__card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px 32px;
+        box-shadow: var(--shadow-sm);
+        max-width: var(--step-w);
         width: 100%;
-        min-height: 1120px;
-        border: 0;
-        background: white;
+        opacity: 0.38;
+        transform: translateY(10px);
+        transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
       }
 
-      .chart-frame--plotly {
-        min-height: 660px;
+      .step__card.is-active {
+        opacity: 1;
+        transform: translateY(0);
+        box-shadow: var(--shadow-md);
+        border-color: rgba(123, 63, 0, 0.18);
       }
+
+      .step__label {
+        font-family: var(--body);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .step__heading {
+        font-family: var(--heading);
+        font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+        font-weight: 700;
+        line-height: 1.25;
+        margin-bottom: 14px;
+      }
+
+      .step__body {
+        font-size: 0.97rem;
+        line-height: 1.72;
+        color: var(--muted);
+      }
+
+      .step__body p + p { margin-top: 12px; }
 
       .citation {
         color: var(--accent);
@@ -138,340 +359,503 @@
         white-space: nowrap;
       }
 
-      ol {
-        margin: 0;
-        padding-left: 22px;
+      /* ─────────────────────────────────────────
+         Figure caption (full-width, below an act)
+      ───────────────────────────────────────── */
+      .fig-caption-block {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 16px var(--side-pad) 60px;
+        font-size: 0.875rem;
+        line-height: 1.65;
         color: var(--muted);
       }
 
-      li + li {
-        margin-top: 12px;
+      .fig-caption-block strong { color: var(--text); }
+
+      /* ─────────────────────────────────────────
+         Coda (Conclusion) — centered prose
+      ───────────────────────────────────────── */
+      .coda {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 72px var(--side-pad) 80px;
+        border-top: 1px solid var(--border);
       }
 
-      li a {
+      .coda__act-label {
+        font-family: var(--body);
+        font-size: 0.78rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
         color: var(--accent);
+        margin-bottom: 12px;
       }
 
-      @media (max-width: 720px) {
-        main {
-          padding: 32px 14px 40px;
+      .coda__title {
+        font-family: var(--heading);
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 700;
+        line-height: 1.12;
+        margin-bottom: 28px;
+      }
+
+      .coda p {
+        font-size: 1.06rem;
+        line-height: 1.78;
+        color: var(--muted);
+        margin-bottom: 22px;
+      }
+
+      .coda p:last-child { margin-bottom: 0; }
+
+      /* ─────────────────────────────────────────
+         Bibliography
+      ───────────────────────────────────────── */
+      .bibliography {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 60px var(--side-pad) 100px;
+        border-top: 1px solid var(--border);
+      }
+
+      .bibliography__title {
+        font-family: var(--heading);
+        font-size: clamp(1.4rem, 2.2vw, 2rem);
+        font-weight: 700;
+        margin-bottom: 30px;
+      }
+
+      .bibliography ol {
+        padding-left: 22px;
+      }
+
+      .bibliography li {
+        font-size: 0.94rem;
+        line-height: 1.65;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+
+      .bibliography a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+      }
+
+      /* ─────────────────────────────────────────
+         Mobile
+      ───────────────────────────────────────── */
+      @media (max-width: 860px) {
+        :root { --side-pad: 18px; }
+
+        .act__inner {
+          flex-direction: column;
         }
 
-        .chapter {
-          padding: 20px;
+        .act__figure {
+          position: relative;
+          width: 100%;
+          height: auto;
+          min-height: 56vw;
+          padding: 16px 0;
         }
 
-        iframe {
-          min-height: 1260px;
+        .act__figure-inner {
+          min-height: 300px;
         }
 
-        .chart-frame--plotly {
-          min-height: 760px;
+        .act__steps {
+          width: 100%;
+          padding-left: 0;
+        }
+
+        .act__header { padding: 40px 0 24px; }
+
+        .step {
+          min-height: unset;
+          padding: 20px 0;
+        }
+
+        .step--spacer { min-height: 16px; }
+
+        /* Always visible on mobile — no fade-in */
+        .step__card {
+          opacity: 1 !important;
+          transform: none !important;
         }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>The fall and rise of drug crimes in San Fransisco</h1>
-      <nav aria-label="Page chapters">
-        <a href="#introduction">Introduction</a>
-        <a href="#annual-trend">Annual Trend</a>
-        <a href="#fall">The Fall</a>
-        <a href="#rise">The Rise</a>
-        <a href="#conclusion">Conclusion</a>
-        <a href="#bibliography">Bibliography</a>
-      </nav>
 
-      <section class="chapter" id="introduction">
-        <h2>Introduction</h2>
-        <p>
-          Between 2003 and 2025, the San Francisco Police Department recorded
-          more than 950,000 incidents across ten categories of crime. For this
-          data story, we focus on one of those categories:
-          <strong>drug offenses</strong>.
-        </p>
-        <p>
-          The dataset combines two SFPD incident report systems: the historical
-          archive covering 2003 to May 2018, and the current reporting system
-          from 2018 onward. Each row is a single reported incident, with a date,
-          time, police district, and category. A drug offense in this dataset
-          means a police officer filed a report, which reflects enforcement
-          activity as much as it reflects actual drug use or dealing. This is an
-          important distinction to note, and one we will return to it.
-        </p>
-        <p>
-          The data shows an interesting pattern: a long decline followed by a
-          sharp rebound. In 2008, SFPD logged 8,405 drug offense reports — the
-          highest in the dataset. Over the next thirteen years, that number
-          continued to fall, bottoming out at just 942 in 2021, a drop of nearly
-          89%. Then it turned around. By 2025, drug reports had climbed back to
-          4,451, nearly five times the 2021 low.
-        </p>
-        <p>
-          This rise and fall is not spread evenly across the city. In our
-          analysis, one neighborhood stands out: the
-          <strong>Tenderloin</strong>. The Tenderloin is a dense, historically
-          low-income district north of City Hall. Across the entire 22-year
-          span, the Tenderloin area accounts for roughly a third of all drug
-          offense reports in San Francisco. The story of drug offenses in SF is,
-          in large part, the story of one neighborhood.
-        </p>
-        <p>
-          But what drives these swings? The data alone cannot tell us. A drop in
-          reported drug offenses might mean less drug activity — or it might mean
-          fewer arrests, a shift in enforcement priorities, or a policy change
-          that reclassified certain offenses. California's Proposition 47 (passed
-          in November 2014), which downgraded simple drug possession from a
-          felony to a misdemeanor, almost certainly shaped the numbers in the
-          years that followed. The COVID-19 pandemic upended enforcement in 2020
-          and 2021. And San Francisco's ongoing fentanyl crisis has drawn intense
-          political pressure since 2022. All of these forces leave fingerprints
-          in the data — but the data cannot tell us which fingerprint belongs to
-          which hand.
-        </p>
-      </section>
+    <!-- ══════════════════════════════════════════
+         MASTHEAD
+    ══════════════════════════════════════════ -->
+    <header class="masthead">
+      <p class="masthead__kicker">San Francisco · 2003–2025 · SFPD Incident Reports</p>
+      <h1 class="masthead__headline">The Fall and Rise of&nbsp;Drug Crimes in&nbsp;San&nbsp;Francisco</h1>
+      <p class="masthead__deck">
+        Between 2003 and 2025, drug offense reports swung from 8,400 a year to fewer than 1,000 — then climbed back to 4,400. This is the story of what the numbers show, and what they can't.
+      </p>
+      <p class="masthead__byline">San Francisco Police Department incident data &nbsp;·&nbsp; 2003–2025</p>
+    </header>
 
-      <section class="chapter" id="annual-trend">
-        <h2>Annual Drug Offense Reports, 2003–2025</h2>
-        <p>
-          The chart below shows the annual count of drug offense reports
-          citywide. Three eras stand out: the long decline from the 2008 peak,
-          the COVID trough of 2020–2021, and the sharp rebound since 2022.
-        </p>
-        <div class="chart-shell" aria-label="Annual drug offense reports, 2003–2025">
-          <img
-            src="./drug_offense_timeseries.svg"
-            alt="Line chart showing annual drug offense reports in San Francisco from 2003 to 2025, peaking at 8,405 in 2008, bottoming at 942 in 2021, and rebounding to 4,451 by 2025"
-          />
-        </div>
-        <p class="chart-caption">
-          <strong>Figure 1</strong> — Annual drug offense reports filed by SFPD,
-          2003–2025. Reports peaked at 8,405 in 2008 before entering a 13-year
-          decline driven by shifting enforcement priorities, the passage of
-          California's Proposition 47 (which downgraded simple drug possession
-          from a felony to a misdemeanor in November 2014), and reduced
-          street-level enforcement during the COVID-19 pandemic. The 2021 trough
-          of 942 reports represents an 89% drop from the 2008 peak. Since 2022,
-          reports have risen sharply — reaching 4,451 in 2025 — coinciding with
-          intensified enforcement responses to San Francisco's fentanyl crisis.
-          Note that a change in reported incidents reflects both actual activity
-          <em>and</em> enforcement choices; the same pattern could result from
-          more drug use, more policing, or both.
-        </p>
-      </section>
+    <!-- NAV -->
+    <nav aria-label="Page sections">
+      <a href="#introduction">Introduction</a>
+      <a href="#act1">Annual Trend</a>
+      <a href="#act2">The Fall</a>
+      <a href="#act3">The Rise</a>
+      <a href="#coda">Conclusion</a>
+      <a href="#bibliography">Bibliography</a>
+    </nav>
 
-      <section class="chapter" id="fall">
-        <h2>The Fall</h2>
-        <p>
-          From 2003 to 2021, recorded drug offense incidents in San Francisco
-          fell sharply, dropping from 7,468 to 913 and declining especially fast
-          after the late-2000s peak. The central story is the citywide collapse
-          in recorded incidents, not neighborhood variation, though one
-          important feature of the trend is that the remaining incidents became
-          increasingly concentrated in the Tenderloin district over time.
-        </p>
-        <p>
-          One possible explanation for the decline is Proposition 47, passed in
-          California in 2014, which reclassified several low-level drug and
-          property offenses from felonies to misdemeanors. According to PPIC,
-          arrests for drug and property crimes fell after those offenses were
-          reclassified, making Prop 47 a plausible contributor to San
-          Francisco's drop in recorded drug offense incidents. At the same time,
-          PPIC is careful not to overclaim: it finds no evidence that changes in
-          drug arrests after Prop 47 led to increases in crime, but it also says
-          the data do not show whether substance use or addiction changed. In
-          other words, Prop 47 may help explain why fewer drug offenses were
-          being recorded, but it does not prove that the underlying drug problem
-          itself became smaller.
-          <a class="citation" href="#ref-4">[4]</a>
-        </p>
-        <p>
-          Another possible contributor to the decline in recorded drug offense
-          incidents is cannabis decriminalization and broader marijuana policy
-          reform. A large US study found that cannabis decriminalization was
-          associated with substantial reductions in cannabis possession arrest
-          rates during the 2010s—roughly 40% to 80%—and makes clear that this
-          was a broader national pattern, not something unique to California or
-          San Francisco. <a class="citation" href="#ref-5">[5]</a> In San
-          Francisco specifically, the city reinforced that shift in 2006 by
-          making law enforcement activity related to adult marijuana offenses
-          its lowest law-enforcement priority, covering actions such as
-          investigation, citation, arrest, and seizure of property, while
-          carving out exceptions such as sales to minors, public sales, and
-          DUI.<a class="citation" href="#ref-6">[6]</a> Together, these changes
-          make it plausible that part of the long-run drop in San Francisco's
-          recorded drug offense incidents reflects changing cannabis enforcement
-          priorities rather than only a simple decline in underlying drug
-          activity
-        </p>
-        <p>
-          Another notable pattern is that the decline in recorded drug offenses
-          was not geographically uniform. While incidents fell sharply citywide,
-          the remaining activity became more concentrated in the Tenderloin
-          district over time, making that neighborhood an increasingly central
-          focal point in the city's drug-offense landscape. This interpretation
-          is consistent with later reporting and official city statements
-          showing that drug incidents and overdoses remained heavily
-          concentrated in Tenderloin even as the broader citywide totals had
-          fallen.
-          <a class="citation" href="#ref-7">[7]</a>
-        </p>
-        <section
-          class="chart-shell chart-shell--fall-map"
-          aria-label="Drug offense heatmap with districts visualization"
-        >
-          <div class="chart-shell__header">
-            <h3 class="chart-shell__title">
-              Drug Offense Concentration Across San Francisco, 2003–2025
-            </h3>
+    <!-- ══════════════════════════════════════════
+         INTRODUCTION
+    ══════════════════════════════════════════ -->
+    <section id="introduction" class="intro-section">
+      <p>
+        Between 2003 and 2025, the San Francisco Police Department recorded more than 950,000 incidents across ten categories of crime. For this data story, we focus on one of those categories: <strong>drug offenses</strong>.
+      </p>
+      <p>
+        The dataset combines two SFPD incident report systems: the historical archive covering 2003 to May 2018, and the current reporting system from 2018 onward. Each row is a single reported incident, with a date, time, police district, and category. A drug offense in this dataset means a police officer filed a report, which reflects enforcement activity as much as it reflects actual drug use or dealing. This is an important distinction to note, and one we will return to.
+      </p>
+      <p>
+        The data shows an interesting pattern: a long decline followed by a sharp rebound. In 2008, SFPD logged 8,405 drug offense reports — the highest in the dataset. Over the next thirteen years, that number continued to fall, bottoming out at just 942 in 2021, a drop of nearly 89%. Then it turned around. By 2025, drug reports had climbed back to 4,451, nearly five times the 2021 low.
+      </p>
+      <p>
+        This rise and fall is not spread evenly across the city. In our analysis, one neighborhood stands out: the <strong>Tenderloin</strong>. The Tenderloin is a dense, historically low-income district north of City Hall. Across the entire 22-year span, the Tenderloin area accounts for roughly a third of all drug offense reports in San Francisco. The story of drug offenses in SF is, in large part, the story of one neighborhood.
+      </p>
+      <p>
+        But what drives these swings? The data alone cannot tell us. A drop in reported drug offenses might mean less drug activity — or it might mean fewer arrests, a shift in enforcement priorities, or a policy change that reclassified certain offenses. California's Proposition 47 (passed in November 2014), which downgraded simple drug possession from a felony to a misdemeanor, almost certainly shaped the numbers in the years that followed. The COVID-19 pandemic upended enforcement in 2020 and 2021. And San Francisco's ongoing fentanyl crisis has drawn intense political pressure since 2022. All of these forces leave fingerprints in the data — but the data cannot tell us which fingerprint belongs to which hand.
+      </p>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         ACT I — A CITY'S HABIT
+    ══════════════════════════════════════════ -->
+    <div class="act-divider" aria-hidden="true">
+      <div class="act-divider__line"></div>
+      <span class="act-divider__numeral">Act I</span>
+      <div class="act-divider__line"></div>
+    </div>
+
+    <section class="act" id="act1">
+      <div class="act__inner">
+
+        <!-- Sticky figure: real SVG timeseries -->
+        <div class="act__figure" aria-label="Annual drug offense reports 2003–2025">
+          <div class="act__figure-inner">
+            <img
+              src="./drug_offense_timeseries.svg"
+              alt="Line chart: annual drug offense reports in San Francisco 2003–2025, peaking at 8,405 in 2008, troughing at 942 in 2021, rebounding to 4,451 by 2025"
+              class="act__figure-img"
+            />
+            <p class="act__figure-caption">Figure 1 — Annual drug offense reports filed by SFPD, 2003–2025</p>
           </div>
-          <iframe
-            src="./drug_offense_heatmap_with_districts_2003_2025_new.html"
-            title="Drug offense heatmap with districts"
-            loading="lazy"
-          ></iframe>
-        </section>
-        <p class="chart-caption">
-          <strong>Figure 2</strong> — Heatmap of recorded drug offense incidents
-          by location and police district, 2003–2025. Use the time slider to
-          move year by year. Brighter areas indicate higher concentrations of
-          recorded incidents, while the district outlines show how the
-          geography of drug enforcement shifted over time. The map makes the
-          broader pattern visible: even as citywide incidents fell, activity
-          became increasingly concentrated in and around the Tenderloin.
-        </p>
-      </section>
+        </div>
 
-      <section class="chapter" id="rise">
-        <h2>The Rise</h2>
-        <p>
-     	    Around 2022 drug crimes started to increase dramatically, and the
-          ratio of drug crimes compared to other crimes also increase. When compared with other crime types in San Fransisco, more specifically assault, burglary, fraud, missing person, prostitution, robbery, vandalism and weapons, drug crimes only accounted for 2.5% of the total crimes within this group in 2021, but in November 2025 this was up to 23%, overtaking assault as the most prelavent of these crime types. 
-          There are a number of ways to interpret the reason for
-          this sharp increase during the last couple of years, and multiple
-          factors likely contribute to the reason, with some of the reasons
-          including the opioid crisis in california and more crackdown on drugs.
+        <!-- Scroll steps -->
+        <div class="act__steps">
+          <div class="act__header">
+            <p class="act__act-label">Act I</p>
+            <h2 class="act__title">A City's&nbsp;Habit</h2>
+            <p class="act__intro">The annual count of drug offense reports tells a story in three distinct eras. Each one reflects a different set of forces acting on the city.</p>
+          </div>
 
-        </p>
-        <p>
-          San Fransisco is dealing with an opioid epidemic and fentanyl, 
-          among other synthetic opioids have gained much ground since 2019, 
-          and are significantly more cheap in San Fransisco compared to other 
-          places in the United States such as New York. 
-          <a class="citation" href="#ref-1">[1]</a>
-          From 2018 until 2020 drug overdose deaths in San Fransisco 
-          almost tripled, going from 259 to 726 deaths, with most of 
-          those deaths being attributed to fentanyl.
-          <a class="citation" href="#ref-2">[2]</a>
-        </p>
-        <p>
-          The response to this drug crisis has been drastic, 
-          and between 2019 and 2023 the state of California spent around 
-          1 billion dollars to try and address this issue, 
-          with around half of that money coming from the states general 
-          fund, and the other half from the federal government. 
-          These efforts have focused on prevention, treatment, 
-          and medication-assisted care
-          <a class="citation" href="#ref-8">[8]</a>, 
-          however that is not the only thing being done to combat the 
-          crisis. Another big strategy has been more crackdown on 
-          drugs, and in November 2023 the All Hands on Deck initiative was announced which brought together local, 
-          state and federal agents to tackle the drug epidemic in San Fransisco.
-          <a class="citation" href="#ref-3">[3]</a>
-        </p>
-        <section
-          class="chart-shell"
-          aria-label="Crime ratio over time visualization"
-        >
-          <iframe
-            class="chart-frame--plotly"
-            src="./interactive_plotly.html"
-            title="Crime ratio over time"
-            loading="lazy"
-          ></iframe>
-        </section>
-        <p class="chart-caption">
-          <strong>Figure 3</strong> — Line graph showing the ratio of assault,
-          burglary, drug offense, fraud, missing person, prostitution, robbery,
-          vandalism and weapons to the total amount of these crimes over the
-          years, where drug offenses are highlighted. The graph is interactive
-          and crime type displays are selectable by clicking on the crime type
-          in the list on the right. It is also possible to view monthly ratio
-          instead of yearly, as well as to see the graph only 5 or 10 years in
-          the past.
-        </p>
-      </section>
+          <div class="step js-step" data-step="1-1">
+            <div class="step__card">
+              <p class="step__label">2003–2008 · Peak Era</p>
+              <h3 class="step__heading">Eight thousand reports a year</h3>
+              <div class="step__body">
+                <p>Drug offense reporting started high and kept climbing. In 2008, SFPD filed 8,405 reports — the highest single-year total in the dataset. At this point, drug offenses were a dominant feature of the city's enforcement landscape, reflecting both the scale of street-level activity and the priorities of the department.</p>
+              </div>
+            </div>
+          </div>
 
-      <section class="chapter" id="conclusion">
-        <h2>Conclusion</h2>
-        <p>Conclusion here....</p>
-      </section>
-      <section class="chapter" id="bibliography">
-        <h2>Bibliography</h2>
-        <ol>
-          <li id="ref-1">
-            Wikipedia contributors.
-            <a href="https://en.wikipedia.org/wiki/California_opioid_crisis"
-              >California opioid crisis</a
-            >.
-          </li>
-          <li id="ref-2">
-            ABC7 News.
-            <a
-              href="https://abc7news.com/post/san-francisco-record-overdose-deaths-fentanyl-wastewater-drug-testing/14186379/"
-              >2023 is SF's deadliest year ever for drug overdoses; solution to
-              crisis may be in wastewater</a
-            >.
-          </li>
-          <li id="ref-3">
-            U.S. Drug Enforcement Administration.
-            <a
-              href="https://www.dea.gov/press-releases/2023/11/02/us-attorney-and-federal-law-enforcement-officials-assemble-state-law"
-              >U.S. Attorney and Federal Law Enforcement Officials Assemble with
-              State Law Enforcement Officers and Local Dignitaries in Show of
-              Unity Against Fentanyl Trafficking in the Tenderloin District of
-              San Francisco</a
-            >.
-          </li>
-          <li id="ref-4">
-            Public Policy Institute of California.
-            <a
-              href="https://www.ppic.org/publication/crime-after-proposition-47-and-the-pandemic/"
-              >Crime after Proposition 47 and the Pandemic</a
-            >, September 2024.
-          </li>
-          <li id="ref-5">
-            National Library of Medicine.
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9855298/"
-              >Association of Recreational Cannabis Legalization With Cannabis
-              Possession Arrest Rates in the US</a
-            >, December 2022.
-          </li>
-          <li id="ref-6">
-            American Legal Publishing's Code Library.
-            <a
-              href="https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-58206"
-              >CANNABIS POLICY REFORM</a
-            >, November 2006.
-          </li>
-          <li id="ref-7">
-            The San Francisco Standard.
-            <a
-              href="https://sfstandard.com/2022/10/20/how-serious-is-tenderloins-drug-problem-heres-what-city-data-says/"
-              >How serious is the Tenderloin's drug problem? Here's what city
-              data says</a
-            >, October 20, 2022.
-          </li>
-          <li id="ref-8">
-            Calmatters
-            <a
-              href="https://calmatters.org/explainers/california-opioid-crisis/"
-              >California Opioid Crisis</a
-            >
-          </li>
-        </ol>
-      </section>
-    </main>
+          <div class="step js-step" data-step="1-2">
+            <div class="step__card">
+              <p class="step__label">2009–2019 · Long Decline</p>
+              <h3 class="step__heading">A thirteen-year slide</h3>
+              <div class="step__body">
+                <p>After the 2008 peak, reported drug offenses fell almost every year for more than a decade. Enforcement priorities shifted. California policy changed. Cannabis decriminalization reduced a large category of arrests nationwide. The decline was steady and deep — but its causes were layered.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step js-step" data-step="1-3">
+            <div class="step__card">
+              <p class="step__label">2020–2021 · COVID Trough</p>
+              <h3 class="step__heading">Nearly to zero</h3>
+              <div class="step__body">
+                <p>The pandemic accelerated the collapse. Street-level enforcement contracted sharply. In 2021, SFPD filed just 942 drug offense reports — an 89% drop from the 2008 peak. By the measure of this data, drug crime had nearly vanished from the city. It hadn't. It was about to return.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step step--spacer" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="fig-caption-block">
+      <strong>Figure 1</strong> — Annual drug offense reports filed by SFPD, 2003–2025. Reports peaked at 8,405 in 2008 before entering a 13-year decline driven by shifting enforcement priorities, the passage of California's Proposition 47 (which downgraded simple drug possession from a felony to a misdemeanor in November 2014), and reduced street-level enforcement during the COVID-19 pandemic. The 2021 trough of 942 reports represents an 89% drop from the 2008 peak. Since 2022, reports have risen sharply — reaching 4,451 in 2025 — coinciding with intensified enforcement responses to San Francisco's fentanyl crisis.
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ACT II — THE FALL
+    ══════════════════════════════════════════ -->
+    <div class="act-divider" aria-hidden="true">
+      <div class="act-divider__line"></div>
+      <span class="act-divider__numeral">Act II</span>
+      <div class="act-divider__line"></div>
+    </div>
+
+    <section class="act" id="act2">
+      <div class="act__inner">
+
+        <!-- Sticky figure: heatmap placeholder (Phase 3) -->
+        <div class="act__figure" aria-label="Drug offense heatmap, 2003–2025">
+          <div class="act__figure-inner">
+            <div class="placeholder placeholder--heatmap">
+              <span class="placeholder__icon">🗺</span>
+              <span class="placeholder__label">Interactive heatmap — integrated in Phase 3</span>
+            </div>
+            <p class="act__figure-caption">Figure 2 — Drug offense concentration across San Francisco by district, 2003–2025</p>
+          </div>
+        </div>
+
+        <!-- Scroll steps -->
+        <div class="act__steps">
+          <div class="act__header">
+            <p class="act__act-label">Act II</p>
+            <h2 class="act__title">The Fall</h2>
+            <p class="act__intro">From 7,468 incidents in 2003 to 913 in 2021. Several forces help explain the collapse — but none tells the whole story on its own.</p>
+          </div>
+
+          <div class="step js-step" data-step="2-1">
+            <div class="step__card">
+              <p class="step__label">Policy · November 2014</p>
+              <h3 class="step__heading">Proposition 47 changes the rules</h3>
+              <div class="step__body">
+                <p>California's Proposition 47 downgraded simple drug possession from a felony to a misdemeanor. According to PPIC, arrests for drug and property crimes fell after those offenses were reclassified, making Prop 47 a plausible contributor to San Francisco's drop in recorded drug offense incidents.</p>
+                <p>PPIC is careful not to overclaim: it finds no evidence that changes in drug arrests after Prop 47 led to increases in crime, but the data do not show whether substance use or addiction changed. <a class="citation" href="#ref-4">[4]</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step js-step" data-step="2-2">
+            <div class="step__card">
+              <p class="step__label">Policy · 2006–2016</p>
+              <h3 class="step__heading">Cannabis drops off the radar</h3>
+              <div class="step__body">
+                <p>A large US study found that cannabis decriminalization was associated with 40%–80% reductions in possession arrest rates during the 2010s. <a class="citation" href="#ref-5">[5]</a></p>
+                <p>San Francisco reinforced that shift in 2006, making adult marijuana enforcement its lowest law-enforcement priority — covering investigation, citation, arrest, and property seizure, with exceptions for sales to minors and public sales. <a class="citation" href="#ref-6">[6]</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step js-step" data-step="2-3">
+            <div class="step__card">
+              <p class="step__label">Geography · 2003–2021</p>
+              <h3 class="step__heading">Everything funnels into the Tenderloin</h3>
+              <div class="step__body">
+                <p>As citywide incidents fell, the remaining activity became more concentrated in the Tenderloin. By 2021, the Tenderloin accounted for 55% of all drug offense reports — up from 27% in 2003.</p>
+                <p>The collapse was uneven: the city quieted, but one neighborhood stayed hot. This is consistent with later reporting and city data showing overdoses and drug incidents remained heavily concentrated in the Tenderloin even as citywide totals fell. <a class="citation" href="#ref-7">[7]</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step step--spacer" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="fig-caption-block">
+      <strong>Figure 2</strong> — Heatmap of recorded drug offense incidents by location and police district, 2003–2025. Brighter areas indicate higher concentrations of recorded incidents; district outlines show how the geography of drug enforcement shifted over time. Even as citywide incidents fell, activity became increasingly concentrated in and around the Tenderloin.
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ACT III — THE RISE
+    ══════════════════════════════════════════ -->
+    <div class="act-divider" aria-hidden="true">
+      <div class="act-divider__line"></div>
+      <span class="act-divider__numeral">Act III</span>
+      <div class="act-divider__line"></div>
+    </div>
+
+    <section class="act" id="act3">
+      <div class="act__inner">
+
+        <!-- Sticky figure: Plotly placeholder (Phase 2) -->
+        <div class="act__figure" aria-label="Drug offense share chart, 2003–2025">
+          <div class="act__figure-inner">
+            <div class="placeholder placeholder--plotly">
+              <span class="placeholder__icon">📈</span>
+              <span class="placeholder__label">Interactive ratio chart — integrated in Phase 2</span>
+            </div>
+            <p class="act__figure-caption">Figure 3 — Drug offenses as a share of selected crime types, 2003–2025</p>
+          </div>
+        </div>
+
+        <!-- Scroll steps -->
+        <div class="act__steps">
+          <div class="act__header">
+            <p class="act__act-label">Act III</p>
+            <h2 class="act__title">The Rise</h2>
+            <p class="act__intro">Around 2022, drug offense reports reversed sharply. From 2.5% of selected crimes in 2021 to 23% by late 2025 — drug offenses overtook assault as the most reported category in this group.</p>
+          </div>
+
+          <div class="step js-step" data-step="3-1">
+            <div class="step__card">
+              <p class="step__label">Context · 2019–2022</p>
+              <h3 class="step__heading">The fentanyl crisis arrives</h3>
+              <div class="step__body">
+                <p>San Francisco is dealing with an opioid epidemic. Fentanyl and other synthetic opioids gained ground rapidly from 2019 onward, and are significantly cheaper in San Francisco compared to other US cities. <a class="citation" href="#ref-1">[1]</a></p>
+                <p>From 2018 to 2020, drug overdose deaths in San Francisco almost tripled — from 259 to 726 — with most attributed to fentanyl. <a class="citation" href="#ref-2">[2]</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step js-step" data-step="3-2">
+            <div class="step__card">
+              <p class="step__label">Response · 2019–2023</p>
+              <h3 class="step__heading">A billion dollars for intervention</h3>
+              <div class="step__body">
+                <p>Between 2019 and 2023, California spent around $1 billion to address the crisis — roughly half from the state's general fund, half from the federal government. These efforts focused on prevention, treatment, and medication-assisted care. <a class="citation" href="#ref-8">[8]</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step js-step" data-step="3-3">
+            <div class="step__card">
+              <p class="step__label">Enforcement · November 2023</p>
+              <h3 class="step__heading">All Hands on Deck</h3>
+              <div class="step__body">
+                <p>In November 2023, the "All Hands on Deck" initiative brought together local, state, and federal agents to tackle the drug epidemic — focused on the Tenderloin. <a class="citation" href="#ref-3">[3]</a></p>
+                <p>The surge in reported drug offenses since 2022 reflects both this enforcement intensity and the underlying crisis that produced it. Which factor drives the numbers more is, again, a question the data cannot answer.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step step--spacer" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="fig-caption-block">
+      <strong>Figure 3</strong> — Line graph showing the ratio of assault, burglary, drug offense, fraud, missing person, prostitution, robbery, vandalism, and weapons to the total of these crimes over time, with drug offenses highlighted. Drug offenses accounted for just 2.5% of this group in 2021, rising to 23% by November 2025 — overtaking assault as the most prevalent category.
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CODA — CONCLUSION
+    ══════════════════════════════════════════ -->
+    <section id="coda" class="coda">
+      <p class="coda__act-label">Conclusion</p>
+      <h2 class="coda__title">Which fingerprint, which hand?</h2>
+      <p>
+        The data presents a clear pattern — a long fall, a sharp rise — but it resists a single clean explanation. The same movement in a crime report count can mean many different things: more police, fewer police; more drug use, less drug use; a new law, an old habit. The numbers are real, but they mirror enforcement decisions as much as they mirror underlying activity.
+      </p>
+      <p>
+        What the data does show clearly is geography. The Tenderloin has been at the center of this story for more than two decades. As drug reports fell citywide, they fell slowest there. As they rose again, they rose fastest there. Any durable response to San Francisco's drug crisis will have to reckon with what has made the Tenderloin its persistent epicenter.
+      </p>
+      <p>
+        The fingerprints are in the data. Matching them to a hand remains the harder task.
+      </p>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BIBLIOGRAPHY
+    ══════════════════════════════════════════ -->
+    <section id="bibliography" class="bibliography">
+      <h2 class="bibliography__title">Bibliography</h2>
+      <ol>
+        <li id="ref-1">
+          Wikipedia contributors.
+          <a href="https://en.wikipedia.org/wiki/California_opioid_crisis">California opioid crisis</a>.
+        </li>
+        <li id="ref-2">
+          ABC7 News.
+          <a href="https://abc7news.com/post/san-francisco-record-overdose-deaths-fentanyl-wastewater-drug-testing/14186379/">2023 is SF's deadliest year ever for drug overdoses; solution to crisis may be in wastewater</a>.
+        </li>
+        <li id="ref-3">
+          U.S. Drug Enforcement Administration.
+          <a href="https://www.dea.gov/press-releases/2023/11/02/us-attorney-and-federal-law-enforcement-officials-assemble-state-law">U.S. Attorney and Federal Law Enforcement Officials Assemble with State Law Enforcement Officers and Local Dignitaries in Show of Unity Against Fentanyl Trafficking in the Tenderloin District of San Francisco</a>.
+        </li>
+        <li id="ref-4">
+          Public Policy Institute of California.
+          <a href="https://www.ppic.org/publication/crime-after-proposition-47-and-the-pandemic/">Crime after Proposition 47 and the Pandemic</a>, September 2024.
+        </li>
+        <li id="ref-5">
+          National Library of Medicine.
+          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9855298/">Association of Recreational Cannabis Legalization With Cannabis Possession Arrest Rates in the US</a>, December 2022.
+        </li>
+        <li id="ref-6">
+          American Legal Publishing's Code Library.
+          <a href="https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-58206">Cannabis Policy Reform</a>, November 2006.
+        </li>
+        <li id="ref-7">
+          The San Francisco Standard.
+          <a href="https://sfstandard.com/2022/10/20/how-serious-is-tenderloins-drug-problem-heres-what-city-data-says/">How serious is the Tenderloin's drug problem? Here's what city data says</a>, October 20, 2022.
+        </li>
+        <li id="ref-8">
+          CalMatters.
+          <a href="https://calmatters.org/explainers/california-opioid-crisis/">California Opioid Crisis</a>.
+        </li>
+      </ol>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SCROLLAMA
+    ══════════════════════════════════════════ -->
+    <script src="https://unpkg.com/scrollama@3.2.0/build/scrollama.js"></script>
+    <script>
+      (function () {
+        'use strict';
+
+        // Only run on desktop (sticky layout active)
+        if (window.matchMedia('(max-width: 860px)').matches) return;
+
+        const scrollers = [];
+
+        document.querySelectorAll('.act').forEach(function (actEl) {
+          const steps = actEl.querySelectorAll('.js-step');
+          if (!steps.length) return;
+
+          const scroller = scrollama();
+
+          scroller
+            .setup({
+              step: steps,
+              offset: 0.52,
+              debug: false,
+            })
+            .onStepEnter(function (res) {
+              const card = res.element.querySelector('.step__card');
+              if (card) card.classList.add('is-active');
+            })
+            .onStepExit(function (res) {
+              // Remove active state only when scrolling back up, so the
+              // last triggered card stays visible while reading downward.
+              if (res.direction === 'up') {
+                const card = res.element.querySelector('.step__card');
+                if (card) card.classList.remove('is-active');
+              }
+            });
+
+          scrollers.push(scroller);
+        });
+
+        // Activate the first step in each act automatically on load
+        document.querySelectorAll('.js-step:first-of-type .step__card').forEach(function (card) {
+          card.classList.add('is-active');
+        });
+
+        // Re-measure on resize
+        window.addEventListener('resize', function () {
+          scrollers.forEach(function (s) { s.resize(); });
+        });
+      })();
+    </script>
   </body>
 </html>
